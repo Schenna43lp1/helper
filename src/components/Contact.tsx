@@ -9,6 +9,7 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("sending");
+    // Demo: replace with an actual API call or email service (e.g. Resend, Formspree) in production
     await new Promise((res) => setTimeout(res, 1500));
     setStatus("sent");
     setFormData({ name: "", email: "", subject: "", message: "" });

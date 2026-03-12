@@ -2,19 +2,29 @@
 
 import { useState } from "react";
 
-function generateChartData(points: number, baseValue: number, volatility: number) {
+// Seeded pseudo-random number generator for consistent SSR/client hydration
+function seededRandom(seed: number) {
+  let s = seed;
+  return function () {
+    s = (s * 1664525 + 1013904223) & 0xffffffff;
+    return (s >>> 0) / 0xffffffff;
+  };
+}
+
+function generateChartData(points: number, baseValue: number, volatility: number, seed: number) {
+  const rand = seededRandom(seed);
   const data = [];
   let value = baseValue;
   for (let i = 0; i < points; i++) {
-    value += (Math.random() - 0.5) * volatility;
+    value += (rand() - 0.5) * volatility;
     value = Math.max(value, baseValue * 0.7);
     data.push(Math.round(value * 100) / 100);
   }
   return data;
 }
 
-const priceData = generateChartData(50, 48000, 800);
-const portfolioData = generateChartData(30, 100000, 2000);
+const priceData = generateChartData(50, 48000, 800, 42);
+const portfolioData = generateChartData(30, 100000, 2000, 137);
 
 function MiniChart({
   data,
