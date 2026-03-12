@@ -6,7 +6,7 @@ function generateChartData(points: number, baseValue: number, volatility: number
   const data = [];
   let value = baseValue;
   for (let i = 0; i < points; i++) {
-    value += (Math.random() - 0.48) * volatility;
+    value += (Math.random() - 0.5) * volatility;
     value = Math.max(value, baseValue * 0.7);
     data.push(Math.round(value * 100) / 100);
   }
